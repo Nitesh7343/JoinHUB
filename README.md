@@ -657,9 +657,3 @@ This project can become:
 * Final year major project
 * Startup idea prototype
 * Interview discussion project
-
-⸻
-
-Author
-
-Developed by: Nitesh Singh
