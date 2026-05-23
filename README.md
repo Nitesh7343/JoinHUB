@@ -15,14 +15,6 @@ The platform supports:
 * JWT authentication
 * Video recordings
 
-This project is designed as a real-world scalable platform similar to:
-
-* Udemy
-* Zoom
-* Google Meet
-* Airmeet
-* Coursera
-
 ⸻
 
 Project Vision
@@ -182,18 +174,6 @@ Additional Features
 
 ⸻
 
-Future Enhancements
-
-* AI-generated summaries
-* AI subtitles
-* Live quizzes
-* Collaborative whiteboard
-* Certificate generation
-* Community discussion forums
-* Calendar integration
-
-⸻
-
 Tech Stack
 
 Frontend
@@ -226,41 +206,6 @@ Database
 * Mongoose ODM
 
 ⸻
-
-Live Streaming
-
-Recommended:
-
-* ZegoCloud SDK
-
-Alternative:
-
-* Agora SDK
-* WebRTC + Socket.io
-
-⸻
-
-Payment Gateway
-
-* Razorpay
-
-⸻
-
-Cloud Storage
-
-* Cloudinary
-
-⸻
-
-Deployment
-
-Frontend:
-
-* Vercel
-
-Backend:
-
-* Render / Railway
 
 Database:
 
