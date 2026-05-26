@@ -54,12 +54,12 @@ const Navbar = () => {
       {/* RIGHT SECTION */}
       <div className="flex items-center gap-6">
 
-        <Link to="/sessions">
-          Sessions
+        <Link to="/dashboard/">
+          Dashboard
         </Link>
 
-        <Link to="/dashboard/create-session">
-          
+        <Link to="/sessions">
+          Sessions
         </Link>
 
         {
