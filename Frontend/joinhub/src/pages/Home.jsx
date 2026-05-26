@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import HeroImg from '../assets/HeroImg.jpeg'
 
 const Home = () => {
   return (
@@ -48,7 +49,7 @@ const Home = () => {
         <div className="w-[45%] flex justify-center">
 
           <img
-            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3"
+            src={HeroImg}
             alt="hero"
             className="rounded-3xl shadow-lg w-full h-[500px] object-cover"
           />
