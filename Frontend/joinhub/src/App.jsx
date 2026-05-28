@@ -3,6 +3,7 @@ import Navbar from './components/Navbar.jsx'
 import Home from './pages/Home.jsx'
 import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
+import Sessions from './pages/Sessions.jsx'
 import {Routes, Route} from 'react-router-dom'
 
 const App = () => {
@@ -12,8 +13,9 @@ const App = () => {
 
     <Routes>
       <Route path = "/" element = {<Home/>}/>
-      <Route path = "/Login" element = {<Login/>}/>
-      <Route path = "/Signup" element = {<Signup/>}/>
+      <Route path = "/login" element = {<Login/>}/>
+      <Route path = "/signup" element = {<Signup/>}/>
+      <Route path = '/sessions' element = {<Sessions/>}/>
     </Routes>
     </>
   )
