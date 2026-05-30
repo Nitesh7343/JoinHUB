@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import admin from "./config/firebase.js";
+import authRoutes from "./routes/authRoutes.js";
+
 
 dotenv.config();
 connectDB();
@@ -21,6 +23,9 @@ app.get("/", (req, res) => {
 app.get("/test", (req, res) => {
   res.send("Firebase Admin Connected");
 });
+
+app.use("/auth", authRoutes);
+app.use("/login", authRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
