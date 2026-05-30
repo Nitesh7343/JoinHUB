@@ -35,7 +35,7 @@ const Home = () => {
             </button>
             </Link>
 
-            <Link to = "/sessions/create">
+            <Link to = "/create-session">
             <button className="border border-black px-6 py-3 rounded-full hover:bg-black hover:text-white transition">
               Organize Session
             </button>
