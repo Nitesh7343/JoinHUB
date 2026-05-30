@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom'
 import SessionCard from "../components/SessionCard";
 
 const Sessions = () => {
@@ -16,18 +17,15 @@ const Sessions = () => {
 
       {/* SESSIONS GRID */}
 
-      <div className="grid grid-cols-3 gap-8">
-        <SessionCard />
+      <div className="grid gap-8 [grid-template-columns:repeat(auto-fit,minmax(320px,1fr))]">
+        <Link to = "/session/1">
+            <SessionCard />
+        </Link>
 
         <SessionCard />
 
         <SessionCard />
 
-        <SessionCard />
-
-        <SessionCard />
-
-        <SessionCard />
       </div>
     </div>
   );
