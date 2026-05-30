@@ -29,13 +29,13 @@ const Home = () => {
           {/* BUTTONS */}
           <div className="flex gap-5 mt-8">
 
-            <Link to = "/exploreSession">
+            <Link to = "/sessions">
             <button className="bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700 transition">
               Explore Sessions
             </button>
             </Link>
 
-            <Link to = "/createSession">
+            <Link to = "/sessions/create">
             <button className="border border-black px-6 py-3 rounded-full hover:bg-black hover:text-white transition">
               Organize Session
             </button>

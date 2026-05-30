@@ -16,7 +16,7 @@ const Login = () => {
           </h1>
 
           <p className="text-gray-500 mt-3">
-            Login to continue to JOIN HUB
+            Login to continue to JoinHUB
           </p>
 
         </div>
