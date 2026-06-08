@@ -31,6 +31,7 @@ const App = () => {
           <Route path="past" element={<PastSessions />} />
           <Route path="create-session" element={<OrganizeSession />} />
           <Route path="profile" element={<Profile />} />
+
       </Route>
     </Routes>
     </>
