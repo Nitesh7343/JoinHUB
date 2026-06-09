@@ -1,4 +1,4 @@
-import Session from '../models/session/js'
+import Session from '../models/session.js'
 
 export const createSession = async(req,res) => {
     try{
@@ -10,7 +10,7 @@ export const createSession = async(req,res) => {
             language,
             isPaid,
             price,
-        } = req,body;
+        } = req.body;
 
         const session = await Session.create({
             title,
