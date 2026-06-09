@@ -1,6 +1,6 @@
 import express from 'express'
 
-import { createSession, getAllSessions, getSessionByID } from '../controllers/sessionController'
+import { createSession, getAllSessions, getSessionByID } from '../controllers/sessionController.js'
 
 import protect from '../middlewares/authMiddleware.js'
 
@@ -10,6 +10,6 @@ router.post("/", protect, createSession);
 
 router.get("/", getAllSessions);
 
-router.get("/:id", getSessionById);
+router.get("/:id", getSessionByID);
 
 export default router;
