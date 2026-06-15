@@ -48,7 +48,7 @@ export const getAllSessions = async(req,res) => {
 
 export const getSessionByID = async(req,res) => {
     try {
-        const session = await Session.findById(req.id).populate("host","username email");
+        const session = await Session.findById(req.params.id).populate("host","username email");
 
         if(!session) {
             return res.status(404).json({
