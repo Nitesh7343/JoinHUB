@@ -17,6 +17,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    sessions: {
+      info:{
+        
+      }
+    }
   },
   {
     timestamps: true,
