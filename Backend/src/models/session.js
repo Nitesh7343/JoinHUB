@@ -1,50 +1,50 @@
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 
-const sessionSchema = new mongoose.Schema(
-  {
-    title: {
-      type: String,
-      required: true,
-    },
+// const sessionSchema = new mongoose.Schema(
+//   {
+//     title: {
+//       type: String,
+//       required: true,
+//     },
 
-    description: {
-      type: String,
-      required: true,
-    },
+//     description: {
+//       type: String,
+//       required: true,
+//     },
 
-    category: {
-      type: String,
-      required: true,
-    },
+//     category: {
+//       type: String,
+//       required: true,
+//     },
 
-    date: {
-      type: Date,
-      required: true,
-    },
+//     date: {
+//       type: Date,
+//       required: true,
+//     },
 
-    language: {
-      type: String,
-      default: "English",
-    },
+//     language: {
+//       type: String,
+//       default: "English",
+//     },
 
-    isPaid: {
-      type: Boolean,
-      default: false,
-    },
+//     isPaid: {
+//       type: Boolean,
+//       default: false,
+//     },
 
-    price: {
-      type: Number,
-      default: 0,
-    },
+//     price: {
+//       type: Number,
+//       default: 0,
+//     },
 
-    host: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
+//     host: {
+//       type: mongoose.Schema.Types.ObjectId,
+//       ref: "User",
+//     },
+//   },
+//   {
+//     timestamps: true,
+//   }
+// );
 
-export default mongoose.model("Session", sessionSchema);
+// export default mongoose.model("Session", sessionSchema);

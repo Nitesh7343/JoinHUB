@@ -1,6 +1,31 @@
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
+
+
+
 
 const DashboardLayout = () => {
+
+ const navigate = useNavigate();
+
+ const handleLogout = async () => {
+  try {
+    // Sign out from Firebase
+    await signOut(auth);
+
+    // Clear browser storage
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    // Redirect to Login
+    navigate("/login", { replace: true });
+
+  } catch (error) {
+    console.error("Logout Error:", error);
+  }
+};
+
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
@@ -64,7 +89,16 @@ const DashboardLayout = () => {
             Profile
           </NavLink>
         </div>
+
+          <button
+  onClick={handleLogout}
+  className="mt-8 px-4 py-2 rounded-xl text-left text-red-600 hover:bg-red-50 transition"
+>
+  Logout
+</button>
       </div>
+
+    
 
       {/* Content */}
       <div className="flex-1 p-8">

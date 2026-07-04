@@ -2,9 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logoH.png";
 import Searchbar from "./Searchbar.jsx"
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
-  const isLoggedIn = false;
+  const { user, loading } = useAuth();
+
+const isLoggedIn = !!user;
 
   return (
     <nav className="flex items-center justify-between px-8 py-1 shadow-md m-3 mt-5 rounded-4xl p-3">

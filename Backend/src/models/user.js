@@ -26,8 +26,8 @@ const userSchema = new mongoose.Schema(
 
     provider: {
       type: String,
-      enum: ["email", "google"],
-      default: "email",
+      enum: ["password", "google"],
+      default: "password",
     },
 
     profilePicture: {
@@ -59,21 +59,7 @@ const userSchema = new mongoose.Schema(
       },
     ],
 
-    // Sessions joined by this user
-    sessionsJoined: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Session",
-      },
-    ],
-
-    // Saved recordings/sessions
-    savedSessions: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Session",
-      },
-    ],
+  
 
     totalSpent: {
       type: Number,
@@ -91,11 +77,6 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    // sessions: {
-    //   info:{
-
-    //   }
-    // }
   },
   {
     timestamps: true,

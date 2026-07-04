@@ -1,17 +1,26 @@
 import express from "express";
-import {register,login,} from "../controllers/authController.js";
+
+import {
+  syncUser,
+  getCurrentUser,
+  updateProfile,
+  deleteAccount,
+} from "../controllers/authController.js";
+
 import protect from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/register", register);
-router.post("/login", login);
+// Create user / Login user
+router.post("/sync-user", syncUser);
 
-router.get("/me", protect, (req, res) => {
-  res.json({
-    message: "Protected route accessed",
-    user: req.user,
-  });
-});
+// Logged in user
+router.get("/me", protect, getCurrentUser);
+
+// Update profile
+router.put("/profile", protect, updateProfile);
+
+// Delete account
+router.delete("/profile", protect, deleteAccount);
 
 export default router;

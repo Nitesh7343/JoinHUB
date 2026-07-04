@@ -1,8 +1,154 @@
 import React, { useState } from 'react'
+import { googleProvider } from "../firebase";
+import { useNavigate } from "react-router-dom";
+import {createUserWithEmailAndPassword,sendEmailVerification,signOut} from "firebase/auth";
+import { auth } from "../firebase";
+import axios from "axios";
 
 const Signup = () => {
 
-  const [otpSent, setOtpSent] = useState(false)
+const [formData, setFormData] = useState({
+  username: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+});
+
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState("");
+const navigate = useNavigate();
+
+const handleChange = (e) => {
+  setFormData({
+    ...formData,
+    [e.target.name]: e.target.value,
+  });
+};
+
+const handleSignup = async (e) => {
+  e.preventDefault();
+
+  setError("");
+
+  const { username, email, password, confirmPassword } = formData;
+
+  // Basic validation
+  if (!username || !email || !password || !confirmPassword) {
+    return setError("Please fill all the fields.");
+  }
+
+  if (password !== confirmPassword) {
+    return setError("Passwords do not match.");
+  }
+
+  if (password.length < 6) {
+    return setError("Password must be at least 6 characters.");
+  }
+
+  try {
+    setLoading(true);
+
+    // Create Firebase user
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    // Send verification email
+    await sendEmailVerification(userCredential.user);
+    // Get Firebase ID Token
+const idToken = await userCredential.user.getIdToken();
+
+// Sync user with backend
+await axios.post(
+  "http://localhost:8000/api/auth/sync-user",
+  {
+    username,
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+    },
+  }
+);
+
+// Sign out after signup
+await signOut(auth);
+
+alert(
+  "Account created successfully!\n\nPlease verify your email before logging in."
+);
+
+// Redirect to Login page
+navigate("/login");
+
+
+  } catch (error) {
+  switch (error.code) {
+    case "auth/email-already-in-use":
+      setError("This email is already registered.");
+      break;
+
+    case "auth/invalid-email":
+      setError("Please enter a valid email.");
+      break;
+
+    case "auth/weak-password":
+      setError("Password should be at least 6 characters.");
+      break;
+
+    default:
+      setError(error.message);
+  }
+} finally {
+    setLoading(false);
+  }
+};
+
+const handleGoogleSignup = async () => {
+  try {
+    setLoading(true);
+    setError("");
+
+    // Open Google Popup
+    const result = await signInWithPopup(
+      auth,
+      googleProvider
+    );
+
+    const user = result.user;
+
+    // Get Firebase Token
+    const idToken = await user.getIdToken();
+
+    // Sync MongoDB
+    await axios.post(
+      "http://localhost:8000/api/auth/sync-user",
+      {
+        username: user.displayName,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
+      }
+    );
+
+    localStorage.setItem("token", idToken);
+
+    navigate("/dashboard", { replace: true });
+
+  } catch (error) {
+
+    if (error.code !== "auth/popup-closed-by-user") {
+      setError(error.message);
+    }
+
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
 
@@ -24,7 +170,7 @@ const Signup = () => {
         </div>
 
         {/* FORM */}
-        <form className="mt-8 flex flex-col gap-5">
+        <form onSubmit={handleSignup} className="mt-8 flex flex-col gap-5">
 
           {/* USERNAME */}
           <div>
@@ -34,10 +180,13 @@ const Signup = () => {
             </label>
 
             <input
-              type="text"
-              placeholder="Enter your username"
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-green-600"
-            />
+  type="text"
+  name="username"
+  value={formData.username}
+  onChange={handleChange}
+  placeholder="Enter your username"
+  className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-green-600"
+/>
 
           </div>
 
@@ -48,11 +197,14 @@ const Signup = () => {
               Email
             </label>
 
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-green-600"
-            />
+           <input
+  type="email"
+  name="email"
+  value={formData.email}
+  onChange={handleChange}
+  placeholder="Enter your email"
+  className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-green-600"
+/>
 
           </div>
 
@@ -64,10 +216,13 @@ const Signup = () => {
             </label>
 
             <input
-              type="password"
-              placeholder="Create a password"
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-green-600"
-            />
+  type="password"
+  name="password"
+  value={formData.password}
+  onChange={handleChange}
+  placeholder="Create a password"
+  className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-green-600"
+/>
 
           </div>
 
@@ -79,55 +234,29 @@ const Signup = () => {
             </label>
 
             <input
-              type="password"
-              placeholder="Confirm your password"
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-green-600"
-            />
+  type="password"
+  name="confirmPassword"
+  value={formData.confirmPassword}
+  onChange={handleChange}
+  placeholder="Confirm your password"
+  className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-green-600"
+/>
 
-          </div>
+         </div>
 
-          {/* SEND OTP BUTTON */}
-          {
-            !otpSent && (
-              <button
-                type="button"
-                onClick={() => setOtpSent(true)}
-                className="bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition"
-              >
-                Send OTP
-              </button>
-            )
-          }
+         {error && (
+  <p className="text-red-500 text-sm">
+    {error}
+  </p>
+)}
 
-          {/* OTP SECTION */}
-          {
-            otpSent && (
-              <div className="flex flex-col gap-4">
-
-                <div>
-
-                  <label className="block mb-2 font-medium">
-                    Enter OTP
-                  </label>
-
-                  <input
-                    type="text"
-                    placeholder="Enter verification code"
-                    className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-green-600"
-                  />
-
-                </div>
-
-                <button
-                  type="button"
-                  className="bg-black text-white py-3 rounded-xl hover:bg-gray-800 transition"
-                >
-                  Verify OTP
-                </button>
-
-              </div>
-            )
-          }
+<button
+  type="submit"
+  disabled={loading}
+  className="bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition disabled:bg-gray-400"
+>
+  {loading ? "Creating Account..." : "Create Account"}
+</button>
 
         </form>
 
@@ -145,11 +274,13 @@ const Signup = () => {
         </div>
 
         {/* GOOGLE BUTTON */}
-        <button className="w-full border border-gray-300 py-3 rounded-xl hover:bg-gray-100 transition">
-
-          Continue with Google
-
-        </button>
+        <button
+  type="button"
+  onClick={handleGoogleSignup}
+  className="w-full border border-gray-300 py-3 rounded-xl hover:bg-gray-100 transition"
+>
+  Continue with Google
+</button>
 
         {/* LOGIN LINK */}
         <p className="text-center mt-6 text-gray-600">
