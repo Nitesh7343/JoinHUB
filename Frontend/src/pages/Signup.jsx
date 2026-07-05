@@ -3,6 +3,7 @@ import { googleProvider } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import {createUserWithEmailAndPassword,sendEmailVerification,signOut} from "firebase/auth";
 import { auth } from "../firebase";
+import { updateProfile } from "firebase/auth";
 import axios from "axios";
 
 const Signup = () => {
@@ -54,6 +55,10 @@ const handleSignup = async (e) => {
       email,
       password
     );
+
+    await updateProfile(userCredential.user, {
+  displayName: username,
+});
 
     // Send verification email
     await sendEmailVerification(userCredential.user);

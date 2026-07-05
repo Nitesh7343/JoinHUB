@@ -13,6 +13,8 @@ import PastSessions from './pages/dashboard/PastSessions.jsx'
 import Profile from './pages/dashboard/Profile.jsx'
 import OrganizeSession from './pages/dashboard/OrganizeSession.jsx'
 import ProtectedRoute from "./components/ProtectedRoute";
+import MyHostedSessions from "./pages/dashboard/MyHostedSessions.jsx";
+import MyRegisteredSessions from "./pages/dashboard/MyRegisteredSessions.jsx";
 
 const App = () => {
   return (
@@ -28,9 +30,10 @@ const App = () => {
       <Route path = 'create-session' element = {<OrganizeSession/>}/>
       <Route path="/dashboard"element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
           <Route index element = {<DashboardHome/>}/>
-          <Route path="upcoming" element={<UpcomingSessions />} />
-          <Route path="past" element={<PastSessions />} />
+          <Route path="hosted" element={<MyHostedSessions />} />
+<Route path="registered" element={<MyRegisteredSessions />} />
           <Route path="create-session" element={<OrganizeSession />} />
+           <Route path="edit-session/:id" element={<OrganizeSession />} />
           <Route path="profile" element={<Profile />} />
 
       </Route>

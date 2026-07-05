@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
-//import admin from "./config/firebase.js";
+import sessionRoutes from "./routes/sessionRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 
 
@@ -26,6 +26,7 @@ app.get("/test", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/sessions", sessionRoutes);
 
 
 app.listen(PORT, () => {

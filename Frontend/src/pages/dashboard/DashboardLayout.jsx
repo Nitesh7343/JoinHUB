@@ -45,27 +45,27 @@ const DashboardLayout = () => {
             Overview
           </NavLink>
 
-          <NavLink
-            to="/dashboard/upcoming"
-            className={({ isActive }) =>
-              isActive
-                ? "bg-green-100 text-green-700 px-4 py-2 rounded-xl font-semibold"
-                : "px-4 py-2 rounded-xl hover:bg-gray-100"
-            }
-          >
-            Upcoming Sessions
-          </NavLink>
+         <NavLink
+  to="/dashboard/hosted"
+  className={({ isActive }) =>
+    isActive
+      ? "bg-green-100 text-green-700 px-4 py-2 rounded-xl font-semibold"
+      : "px-4 py-2 rounded-xl hover:bg-gray-100"
+  }
+>
+  My Hosted Sessions
+</NavLink>
 
-          <NavLink
-            to="/dashboard/past"
-            className={({ isActive }) =>
-              isActive
-                ? "bg-green-100 text-green-700 px-4 py-2 rounded-xl font-semibold"
-                : "px-4 py-2 rounded-xl hover:bg-gray-100"
-            }
-          >
-            Past Sessions
-          </NavLink>
+<NavLink
+  to="/dashboard/registered"
+  className={({ isActive }) =>
+    isActive
+      ? "bg-green-100 text-green-700 px-4 py-2 rounded-xl font-semibold"
+      : "px-4 py-2 rounded-xl hover:bg-gray-100"
+  }
+>
+  My Registered Sessions
+</NavLink>
 
           <NavLink
             to="/dashboard/create-session"

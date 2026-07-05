@@ -1,50 +1,88 @@
-// import mongoose from "mongoose";
+import mongoose from "mongoose";
 
-// const sessionSchema = new mongoose.Schema(
-//   {
-//     title: {
-//       type: String,
-//       required: true,
-//     },
+const sessionSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+    },
 
-//     description: {
-//       type: String,
-//       required: true,
-//     },
+    description: {
+      type: String,
+      default: "",
+    },
 
-//     category: {
-//       type: String,
-//       required: true,
-//     },
+    category: {
+      type: String,
+      required: true,
+    },
 
-//     date: {
-//       type: Date,
-//       required: true,
-//     },
+    mode: {
+      type: String,
+      enum: ["Online", "Offline"],
+      required: true,
+    },
 
-//     language: {
-//       type: String,
-//       default: "English",
-//     },
 
-//     isPaid: {
-//       type: Boolean,
-//       default: false,
-//     },
+    venue: {
+      type: String,
+      default: "",
+    },
 
-//     price: {
-//       type: Number,
-//       default: 0,
-//     },
+    date: {
+      type: Date,
+      required: true,
+    },
 
-//     host: {
-//       type: mongoose.Schema.Types.ObjectId,
-//       ref: "User",
-//     },
-//   },
-//   {
-//     timestamps: true,
-//   }
-// );
+    startTime: {
+      type: String,
+      required: true,
+    },
 
-// export default mongoose.model("Session", sessionSchema);
+    endTime: {
+      type: String,
+      default: "",
+    },
+
+    maxParticipants: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
+
+    registeredUsers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+
+    organizer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+
+    price: {
+      type: Number,
+      default: 0,
+    },
+
+    thumbnail: {
+      type: String,
+      default: "",
+    },
+
+    status: {
+  type: String,
+  enum: ["Draft", "Published", "Completed", "Cancelled"],
+  default: "Published",
+},
+  },
+  {
+    timestamps: true,
+  }
+);
+
+export default mongoose.model("Session", sessionSchema);
